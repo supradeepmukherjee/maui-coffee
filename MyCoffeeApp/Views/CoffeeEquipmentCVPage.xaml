@@ -101,89 +101,37 @@
 
             <CollectionView.ItemTemplate>
                 <DataTemplate x:DataType="model:Coffee">
-
-
-                    <SwipeView android:SwipeView.SwipeTransitionMode="Reveal">
+                    <SwipeView android:SwipeView.SwipeTransitionMode="Drag">
                         <SwipeView.RightItems>
-                            <SwipeItems SwipeBehaviorOnInvoked="Close">
-                                <SwipeItem
-                                    BackgroundColor="Pink"
-                                    Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodels:CoffeeEquipmentViewModel}}, Path=FavoriteCommand}"
+                            <SwipeItems SwipeBehaviorOnInvoked="Auto">
+                                <SwipeItem 
+                                    Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodels:CoffeeEquipmentViewModel}},Path=FavoriteCommand}"
                                     CommandParameter="{Binding .}"
+                                    Text="Favorite" 
+                                    BackgroundColor="Yellow"
                                     IconImageSource="dotnet_bot.png"
-                                    Text="Favorite" />
-                                <SwipeItem Text="Delete" />
-
+                                    />
+                                <SwipeItem Text="Delete"/>
                             </SwipeItems>
                         </SwipeView.RightItems>
                         <SwipeView.LeftItems>
-                            <SwipeItems SwipeBehaviorOnInvoked="Close">
-                                <SwipeItemView>
-                                    <Frame
-                                        Padding="0"
-                                        BackgroundColor="Orange"
-                                        CornerRadius="50"
-                                        HeightRequest="100"
+                            <SwipeItemView>
+                                <Border 
+                                    BackgroundColor="BlanchedAlmond"
+                                    WidthRequest="100"
+                                    HeightRequest="100"
+                                    VerticalOptions="Center"
+                                    StrokeShape="RoundRectangle 50"
+                                    Padding="0">
+                                    <Label 
+                                        Text="Test" 
                                         VerticalOptions="Center"
-                                        WidthRequest="100">
-                                        <Label
-                                            HorizontalOptions="Center"
-                                            Text="Circle"
-                                            VerticalOptions="Center" />
-                                    </Frame>
-                                </SwipeItemView>
-                                <SwipeItemView>
-                                    <Frame
-                                        Padding="0"
-                                        BackgroundColor="Orange"
-                                        CornerRadius="50"
-                                        HeightRequest="100"
-                                        VerticalOptions="Center"
-                                        WidthRequest="100">
-                                        <Label
-                                            HorizontalOptions="Center"
-                                            Text="Circle"
-                                            VerticalOptions="Center" />
-                                    </Frame>
-                                </SwipeItemView>
-                            </SwipeItems>
+                                        HorizontalOptions="Center"/>
+                                </Border>
+                            </SwipeItemView>
                         </SwipeView.LeftItems>
-
-                        <cells:CoffeeCard>
-                            <FlyoutBase.ContextFlyout>
-                                <MenuFlyout>
-                                    <MenuFlyoutItem
-                                        Command="{Binding Source={x:Reference CoffeePage}, Path=BindingContext.FavoriteCommand}"
-                                        CommandParameter="{Binding .}"
-                                        Text="Favorite">
-                                        <MenuFlyoutItem.IconImageSource>
-                                            <FontImageSource
-                                                FontFamily="FAS"
-                                                Glyph="{x:Static fontAwesome:FontAwesomeIcons.MugHot}"
-                                                Color="{AppThemeBinding Dark=White,
-                                                                        Light={StaticResource SystemGray5Dark}}" />
-                                        </MenuFlyoutItem.IconImageSource>
-                                    </MenuFlyoutItem>
-                                    <MenuFlyoutSeparator />
-                                    <MenuFlyoutItem Text="Delete" />
-
-                                    <MenuFlyoutSeparator />
-                                    <MenuFlyoutSubItem Text="Options">
-                                        <MenuFlyoutItem Text="Option 1" />
-                                        <MenuFlyoutItem Text="Option 2" />
-                                        <MenuFlyoutItem Text="Option 3" />
-                                        <MenuFlyoutItem Text="Option 4" />
-
-                                    </MenuFlyoutSubItem>
-
-
-                                </MenuFlyout>
-
-                            </FlyoutBase.ContextFlyout>
-
-                        </cells:CoffeeCard>
+                            <cells:CoffeeCard/>
                     </SwipeView>
-
                 </DataTemplate>
             </CollectionView.ItemTemplate>
 
