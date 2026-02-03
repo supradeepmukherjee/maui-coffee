@@ -1,0 +1,218 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="MyCoffeeApp.Views.CoffeeEquipmentCVPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:android="clr-namespace:Microsoft.Maui.Controls.PlatformConfiguration.AndroidSpecific;assembly=Microsoft.Maui.Controls"
+    xmlns:cells="clr-namespace:MyCoffeeApp.Cells"
+    xmlns:fontAwesome="clr-namespace:FontAwesome"
+    xmlns:ios="clr-namespace:Microsoft.Maui.Controls.PlatformConfiguration.iOSSpecific;assembly=Microsoft.Maui.Controls"
+    xmlns:model="clr-namespace:MyCoffeeApp.Shared.Models;assembly=MyCoffeeApp.Shared"
+    xmlns:mvvm="clr-namespace:MvvmHelpers;assembly=MvvmHelpers"
+    xmlns:viewmodels="clr-namespace:MyCoffeeApp.ViewModels"
+    x:Name="CoffeePage"
+    x:DataType="viewmodels:CoffeeEquipmentViewModel"
+    BackgroundColor="{AppThemeBinding Dark={StaticResource WindowBackgroundColorDark},
+                                      Light={StaticResource WindowBackgroundColor}}">
+
+    <ContentPage.MenuBarItems>
+        <MenuBarItem Text="File">
+
+            <MenuFlyoutSubItem Text="New">
+                <MenuFlyoutItem
+                    x:Name="MenuItemNew"
+                    Clicked="MenuFlyoutItem_Clicked_1"
+                    Text="New project">
+                    <MenuFlyoutItem.KeyboardAccelerators>
+                        <KeyboardAccelerator Key="N" Modifiers="Ctrl" />
+                    </MenuFlyoutItem.KeyboardAccelerators>
+                </MenuFlyoutItem>
+
+                <MenuFlyoutItem Text="New file" />
+                <MenuFlyoutItem Text="New class" />
+                <MenuFlyoutItem Text="New new" />
+            </MenuFlyoutSubItem>
+            <MenuFlyoutItem Text="Open" />
+
+            <MenuFlyoutSeparator />
+            <MenuFlyoutItem Text="Save" />
+            <MenuFlyoutItem Text="Save as" />
+            <MenuFlyoutSeparator />
+            <MenuFlyoutItem Text="Exit" />
+
+        </MenuBarItem>
+        <MenuBarItem Text="Edit">
+            <MenuFlyoutItem Text="Favorite">
+                <MenuFlyoutItem.IconImageSource>
+                    <FontImageSource
+                        FontFamily="FAS"
+                        Glyph="{x:Static fontAwesome:FontAwesomeIcons.MugHot}"
+                        Color="{AppThemeBinding Dark=White,
+                                                Light={StaticResource SystemGray5Dark}}" />
+                </MenuFlyoutItem.IconImageSource>
+            </MenuFlyoutItem>
+            <MenuFlyoutSeparator />
+            <MenuFlyoutItem Text="Delete" />
+
+            <MenuFlyoutSeparator />
+            <MenuFlyoutSubItem Text="Options">
+                <MenuFlyoutItem Text="Option 1" />
+                <MenuFlyoutItem Text="Option 2" />
+                <MenuFlyoutItem Text="Option 3" />
+                <MenuFlyoutItem Text="Option 4" />
+
+            </MenuFlyoutSubItem>
+        </MenuBarItem>
+        <MenuBarItem Text="Window" />
+        <MenuBarItem Text="Help" />
+    </ContentPage.MenuBarItems>
+
+    <RefreshView
+        Command="{Binding RefreshCommand}"
+        IsRefreshing="{Binding IsBusy, Mode=OneWay}"
+        Style="{StaticResource BaseRefreshView}">
+
+        <CollectionView
+            BackgroundColor="Transparent"
+            IsGrouped="True"
+            ItemSizingStrategy="MeasureAllItems"
+            ItemsLayout="VerticalList"
+            ItemsSource="{Binding CoffeeGroups}"
+            RemainingItemsThreshold="1"
+            RemainingItemsThresholdReachedCommand="{Binding DelayLoadMoreCommand}"
+            SelectedItem="{Binding SelectedCoffee, Mode=TwoWay}"
+            SelectionMode="None">
+            <CollectionView.EmptyView>
+                <StackLayout Padding="12">
+                    <Label HorizontalOptions="Center" Text="No coffee" />
+                </StackLayout>
+            </CollectionView.EmptyView>
+            <CollectionView.GroupHeaderTemplate>
+                <DataTemplate x:DataType="{x:Null}">
+                    <StackLayout Padding="12">
+                        <Label Style="{StaticResource LabelMedium}" Text="{Binding Key}" />
+                    </StackLayout>
+                </DataTemplate>
+            </CollectionView.GroupHeaderTemplate>
+
+
+
+
+
+            <CollectionView.ItemTemplate>
+                <DataTemplate x:DataType="model:Coffee">
+
+
+                    <SwipeView android:SwipeView.SwipeTransitionMode="Reveal">
+                        <SwipeView.RightItems>
+                            <SwipeItems SwipeBehaviorOnInvoked="Close">
+                                <SwipeItem
+                                    BackgroundColor="Pink"
+                                    Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodels:CoffeeEquipmentViewModel}}, Path=FavoriteCommand}"
+                                    CommandParameter="{Binding .}"
+                                    IconImageSource="dotnet_bot.png"
+                                    Text="Favorite" />
+                                <SwipeItem Text="Delete" />
+
+                            </SwipeItems>
+                        </SwipeView.RightItems>
+                        <SwipeView.LeftItems>
+                            <SwipeItems SwipeBehaviorOnInvoked="Close">
+                                <SwipeItemView>
+                                    <Frame
+                                        Padding="0"
+                                        BackgroundColor="Orange"
+                                        CornerRadius="50"
+                                        HeightRequest="100"
+                                        VerticalOptions="Center"
+                                        WidthRequest="100">
+                                        <Label
+                                            HorizontalOptions="Center"
+                                            Text="Circle"
+                                            VerticalOptions="Center" />
+                                    </Frame>
+                                </SwipeItemView>
+                                <SwipeItemView>
+                                    <Frame
+                                        Padding="0"
+                                        BackgroundColor="Orange"
+                                        CornerRadius="50"
+                                        HeightRequest="100"
+                                        VerticalOptions="Center"
+                                        WidthRequest="100">
+                                        <Label
+                                            HorizontalOptions="Center"
+                                            Text="Circle"
+                                            VerticalOptions="Center" />
+                                    </Frame>
+                                </SwipeItemView>
+                            </SwipeItems>
+                        </SwipeView.LeftItems>
+
+                        <cells:CoffeeCard>
+                            <FlyoutBase.ContextFlyout>
+                                <MenuFlyout>
+                                    <MenuFlyoutItem
+                                        Command="{Binding Source={x:Reference CoffeePage}, Path=BindingContext.FavoriteCommand}"
+                                        CommandParameter="{Binding .}"
+                                        Text="Favorite">
+                                        <MenuFlyoutItem.IconImageSource>
+                                            <FontImageSource
+                                                FontFamily="FAS"
+                                                Glyph="{x:Static fontAwesome:FontAwesomeIcons.MugHot}"
+                                                Color="{AppThemeBinding Dark=White,
+                                                                        Light={StaticResource SystemGray5Dark}}" />
+                                        </MenuFlyoutItem.IconImageSource>
+                                    </MenuFlyoutItem>
+                                    <MenuFlyoutSeparator />
+                                    <MenuFlyoutItem Text="Delete" />
+
+                                    <MenuFlyoutSeparator />
+                                    <MenuFlyoutSubItem Text="Options">
+                                        <MenuFlyoutItem Text="Option 1" />
+                                        <MenuFlyoutItem Text="Option 2" />
+                                        <MenuFlyoutItem Text="Option 3" />
+                                        <MenuFlyoutItem Text="Option 4" />
+
+                                    </MenuFlyoutSubItem>
+
+
+                                </MenuFlyout>
+
+                            </FlyoutBase.ContextFlyout>
+
+                        </cells:CoffeeCard>
+                    </SwipeView>
+
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+
+
+
+
+
+
+
+            <CollectionView.Header>
+                <StackLayout Orientation="Horizontal">
+                    <Label
+                        HorizontalOptions="Center"
+                        Style="{StaticResource LabelMedium}"
+                        Text="Coffee of the World" />
+                </StackLayout>
+            </CollectionView.Header>
+            <CollectionView.Footer>
+                <StackLayout HorizontalOptions="Center" Orientation="Horizontal">
+                    <Button
+                        Command="{Binding LoadMoreCommand}"
+                        Style="{StaticResource ButtonOutline}"
+                        Text="Load More" />
+                    <Button
+                        Command="{Binding ClearCommand}"
+                        Style="{StaticResource ButtonOutline}"
+                        Text="Clear" />
+                </StackLayout>
+            </CollectionView.Footer>
+        </CollectionView>
+    </RefreshView>
+</ContentPage>
