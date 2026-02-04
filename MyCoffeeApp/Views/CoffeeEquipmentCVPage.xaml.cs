@@ -9,12 +9,11 @@ public partial class CoffeeEquipmentCVPage : ContentPage
         InitializeComponent();
         BindingContext = vm;
 
-        //MenuItemNew.KeyboardAccelerators.Add(
-        //    new KeyboardAccelerator
-        //    {
-        //        Modifiers = KeyboardAcceleratorModifiers.Ctrl,
-        //        Key = "N"
-        //    });
+        displayAlert.KeyboardAccelerators.Add(new KeyboardAccelerator
+        {
+            Modifiers = KeyboardAcceleratorModifiers.Shift,
+            Key = "Z"
+        });
     }
 
     private async void SwipeItem_Invoked(object sender, EventArgs e)

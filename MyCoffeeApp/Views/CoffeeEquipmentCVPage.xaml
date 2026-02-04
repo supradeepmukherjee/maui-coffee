@@ -25,7 +25,12 @@
             
         </MenuBarItem>
         <MenuBarItem Text="View">
-            
+            <MenuFlyoutItem Clicked="MenuFlyoutItem_Clicked_1" Text="Show ALert">
+                <MenuFlyoutItem.KeyboardAccelerators>
+                    <KeyboardAccelerator Modifiers="Shift" Key="Q"/>
+                </MenuFlyoutItem.KeyboardAccelerators>
+            </MenuFlyoutItem>
+            <MenuFlyoutItem Clicked="MenuFlyoutItem_Clicked_1" Text="Display ALert" x:Name="displayAlert"/>
         </MenuBarItem>
         <MenuBarItem Text="Help">
             
