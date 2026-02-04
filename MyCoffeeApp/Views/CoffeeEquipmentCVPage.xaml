@@ -130,7 +130,23 @@
                                 </Border>
                             </SwipeItemView>
                         </SwipeView.LeftItems>
-                            <cells:CoffeeCard/>
+                        <cells:CoffeeCard>
+                            <FlyoutBase.ContextFlyout>
+                                <MenuFlyout>
+                                    <MenuFlyoutItem Text="Favorite" 
+                                                    Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodels:CoffeeEquipmentViewModel}},Path=FavoriteCommand}"
+                                                    CommandParameter="{Binding .}"
+                                                    />
+                                    <MenuFlyoutSeparator/>
+                                    <MenuFlyoutItem Text="Delete"/>
+                                    <MenuFlyoutSeparator/>
+                                    <MenuFlyoutSubItem Text="More Options">
+                                        <MenuFlyoutItem Text="Option A"/>
+                                        <MenuFlyoutItem Text="Option B"/>
+                                    </MenuFlyoutSubItem>
+                                </MenuFlyout>
+                            </FlyoutBase.ContextFlyout>
+                        </cells:CoffeeCard>
                     </SwipeView>
                 </DataTemplate>
             </CollectionView.ItemTemplate>
